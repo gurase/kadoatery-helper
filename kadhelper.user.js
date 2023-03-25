@@ -4,12 +4,12 @@
 // @version      0.1
 // @description  Highlight kads you can quickly feed and timekeep
 // @author       You
-// @match        http://www.neopets.com/games/kadoatery*
-// @match        http://www.neopets.com/inventory.phtml*
-// @match        http://www.neopets.com/safetydeposit.phtml*
+// @match        *://*.neopets.com/games/kadoatery*
+// @match        *://*.neopets.com/inventory.phtml*
+// @match        *://*.neopets.com/safetydeposit.phtml*
 // @grant        none
 // ==/UserScript==
-// @require     http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
+// @require     https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
 // if using greasemonkey, move the above line up one ^
 
 /* TODO:
@@ -75,7 +75,7 @@
         }
     }
 
-    if (document.URL.search("http://www.neopets.com/games/kadoatery") >= 0) {
+    if (document.URL.search("https://www.neopets.com/games/kadoatery") >= 0) {
         function highlightItems(cell, itemName) {
              $(cell).on("mousedown", function(e) {
                 copy(itemName);
@@ -210,15 +210,15 @@
                     }
                 });
 
-
-                if (lastRf.rfMain) {
-                    list += "\nlast rf @ " + lastRf.rfMain + "\n\n";
-                    list += "new main @ " + formatMinsOnly(addMinutes(lastRf.rfMain, 28)) + "\n";
+                if (lastRf.rfMini) {
+                    list += "new mini @ " + formatMinsOnly(addMinutes(lastRf.rfMini, 28)) + "\n";
                 }
 
-                if (lastRf.rfMini) {
-                    list += "new mini @ " + formatMinsOnly(addMinutes(lastRf.rfMini, 28));
-                    }
+                // todo: maybe change last RF to last RF of any kind (main or mini)
+                if (lastRf.rfMain) {
+                    list += "new main @ " + formatMinsOnly(addMinutes(lastRf.rfMain, 28)) + "\n";
+                    list += "\nlast rf @ " + lastRf.rfMain;                 
+                }
             }
 
             if (!$('#kfl-output').length) {
